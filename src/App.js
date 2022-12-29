@@ -7,6 +7,21 @@ function App() {
   const [runningStatus, setRunningStatus] = useState(false);
   const [pauseTime, setPauseTime] = useState(0);
   const clearInput = useRef("");
+  const [data, setData] = useState([]);
+
+  const api= 'https://jsonplaceholder.typicode.com/todos/'
+
+  // useEffect(()=>{
+  //   fetch(api)
+  //   .then(resp=>resp.json())
+  //   .then(data=>console.log(data))
+  // },[])
+
+  async function fetchApi(){
+    await fetch(api)
+    .then(resp=>resp.json())
+    .then(data=>setData(data))
+  }
 
   const decreaseTime = () => {
     runningStatus ? setRunningStatus(false) : setRunningStatus(true);
@@ -40,11 +55,10 @@ function App() {
       <button style={{ marginRight: 10 }} onClick={decreaseTime}>
         {runningStatus ? "pause" : "start"}
       </button>
-      <button
-        
-      >
-        reset
+      <button onClick={fetchApi}>
+        fetch
       </button>
+      
     </div>
   );
 }
